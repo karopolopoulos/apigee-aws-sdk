@@ -1,4 +1,4 @@
-var index = require('../../lib');
+var index = require('../lib');
 
 describe('index.js unit test', () => {
   test('index file exports expected', () => {

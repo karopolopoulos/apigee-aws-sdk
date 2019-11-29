@@ -4,7 +4,7 @@
   "description": "Invoke a lambda function directly from APIGEE",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest test/**/*.test.js -- ",
+    "test": "jest test/*.test.js -- ",
     "lint": "lint-staged"
   },
   "repository": {
