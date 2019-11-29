@@ -1,0 +1,19 @@
+{
+  "name": "apigee-lambda-invoke",
+  "version": "1.0.0",
+  "description": "Invoke a lambda function directly from APIGEE",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:karopolopoulos/apigee-lambda-invoke.git"
+  },
+  "keywords": [
+    "apigee",
+    "lambda"
+  ],
+  "author": "Evan Karopoulos <evankaropoulos@gmail.com>",
+  "license": "MIT"
+}
