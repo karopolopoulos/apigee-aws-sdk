@@ -1,5 +1,5 @@
 {
-  "name": "apigee-lambda-invoke",
+  "name": "apigee-aws-sdk",
   "version": "1.0.0",
   "description": "Invoke a lambda function directly from APIGEE",
   "main": "lib/index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:karopolopoulos/apigee-lambda-invoke.git"
+    "url": "git@github.com:karopolopoulos/apigee-aws-sdk.git"
   },
   "keywords": [
     "apigee",
