@@ -4,7 +4,8 @@
   "description": "Invoke a lambda function directly from APIGEE",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest test/*.test.js"
+    "test": "jest test/**/*.test.js -- ",
+    "lint": "lint-staged"
   },
   "repository": {
     "type": "git",
@@ -12,8 +13,24 @@
   },
   "keywords": [
     "apigee",
+    "aws",
     "lambda"
   ],
   "author": "Evan Karopoulos <evankaropoulos@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.7.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.0.5",
+    "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "crypto-js": "^3.1.9-1"
+  }
 }

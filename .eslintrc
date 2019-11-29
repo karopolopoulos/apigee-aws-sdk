@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:prettier/recommended",
+    "plugin:jest/recommended"
+  ],
+  "rules": {
+    "no-var": "off",
+    "prefer-template": "off",
+    "no-underscore-dangle": "off",
+    "vars-on-top": "off",
+    "func-names": "off"
+  }
+}
