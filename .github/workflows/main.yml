@@ -18,3 +18,11 @@ jobs:
           npm ci
           npm run lint
           npm test
+        env:
+          CI: true
+      - name: npm publish
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN
+          npm publish
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
