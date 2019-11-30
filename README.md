@@ -1,7 +1,7 @@
 # Apigee AWS SDK
 
 ![npm](https://img.shields.io/npm/v/npm)
-![](https://github.com/karopolopoulos/apigee-aws-sdk/workflows/.github/workflows/main.yml/badge.svg)
+![](https://github.com/karopolopoulos/apigee-aws-sdk/workflows/ci/badge.svg)
 
 This package is primarily focused at enabling Apigee users to integrate with AWS services directly from a [JavaScript Policy](https://docs.apigee.com/api-platform/reference/policies/javascript-policy).
 
