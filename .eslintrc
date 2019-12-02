@@ -9,6 +9,8 @@
     "prefer-template": "off",
     "no-underscore-dangle": "off",
     "vars-on-top": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "no-use-before-define": "off",
+    "object-shorthand": "off"
   }
 }

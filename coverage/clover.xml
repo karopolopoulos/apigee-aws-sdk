@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1575330835401" clover="3.2.0">
+  <project timestamp="1575330835401" name="All files">
+    <metrics statements="49" coveredstatements="49" conditionals="12" coveredconditionals="9" methods="15" coveredmethods="15" elements="76" coveredelements="73" complexity="0" loc="49" ncloc="49" packages="2" files="2" classes="2"/>
+    <package name="helpers">
+      <metrics statements="26" coveredstatements="26" conditionals="6" coveredconditionals="6" methods="12" coveredmethods="12"/>
+      <file name="signRequest.js" path="/Users/evan/Documents/not-telstra/projects/apigee-aws-sdk/lib/helpers/signRequest.js">
+        <metrics statements="26" coveredstatements="26" conditionals="6" coveredconditionals="6" methods="12" coveredmethods="12"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="44" count="3" type="stmt"/>
+        <line num="55" count="3" type="stmt"/>
+        <line num="57" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="60" count="11" type="stmt"/>
+        <line num="73" count="3" type="stmt"/>
+        <line num="88" count="3" type="stmt"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="90" count="3" type="stmt"/>
+        <line num="91" count="3" type="stmt"/>
+        <line num="93" count="3" type="stmt"/>
+        <line num="104" count="3" type="stmt"/>
+        <line num="118" count="6" type="stmt"/>
+        <line num="122" count="9" type="stmt"/>
+        <line num="126" count="6" type="stmt"/>
+        <line num="128" count="22" type="stmt"/>
+        <line num="134" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="modules">
+      <metrics statements="23" coveredstatements="23" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="3"/>
+      <file name="lambda.js" path="/Users/evan/Documents/not-telstra/projects/apigee-aws-sdk/lib/modules/lambda.js">
+        <metrics statements="23" coveredstatements="23" conditionals="6" coveredconditionals="3" methods="3" coveredmethods="3"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="12" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="15" count="2" type="stmt"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="25" count="2" type="stmt"/>
+        <line num="37" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="10" type="stmt"/>
+        <line num="46" count="2" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+        <line num="49" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
