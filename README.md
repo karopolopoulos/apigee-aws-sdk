@@ -59,7 +59,17 @@ lambda.invoke(params, function(err, data) {
 
 ### Bundling for Apigee
 
-Apigee does not allow you to import packages from a package manager for a Javascript Policy. Instead all the files must be uploaded together before deployment.
+Apigee does not allow you to import packages from a package manager for a Javascript Policy. Instead all the files must be uploaded together before deployment. This can be achieved by first bunding with [webpack](https://www.npmjs.com/package/webpack) then uploading the bundle as a new revision.
+
+There are a few steps to achieve this:
+
+#### Install webpack locally
+
+```
+$ npm install --save-dev webpack webpack-cli
+```
+
+2. h
 
 ## API
 
