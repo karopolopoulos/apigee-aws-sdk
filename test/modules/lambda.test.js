@@ -34,7 +34,10 @@ describe('Lambda Module', () => {
     test('should successfully invoke lambda', () => {
       const params = {
         FunctionName: 'hello-world',
-        Payload: '{"message":"A test request"}'
+        Payload: '{"message":"A test request"}',
+        LogType: 'Tail',
+        ClientContext: '123',
+        Qualifier: '1.0'
       };
       lambda.invoke(params, (err, data) => {
         expect(err).toBeNull();
@@ -42,10 +45,10 @@ describe('Lambda Module', () => {
 
         expect(httpMock.open).toHaveBeenCalledWith(
           'POST',
-          `https://lambda.${options.region}.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations`,
+          `https://lambda.${options.region}.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations?Qualifier=${params.Qualifier}`,
           false
         );
-        expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(5);
+        expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(7);
 
         expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
           1,
@@ -57,6 +60,7 @@ describe('Lambda Module', () => {
           'Host',
           `lambda.${options.region}.amazonaws.com`
         );
+
         expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
           3,
           'X-Amz-Date',
@@ -69,6 +73,16 @@ describe('Lambda Module', () => {
         );
         expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
           5,
+          'X-Amz-Log-Type',
+          params.LogType
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          6,
+          'X-Amz-Client-Context',
+          params.ClientContext
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          7,
           'Authorization',
           expect.anything()
         );
@@ -102,6 +116,12 @@ describe('Lambda Module', () => {
         expect(data).toBeNull();
         expect(err.message).toEqual('this is an error');
       });
+    });
+
+    test('should throw required params error', () => {
+      expect(() => {
+        lambda.invoke();
+      }).toThrow('FunctionName is a required paramter');
     });
   });
 });
