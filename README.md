@@ -89,6 +89,8 @@ module.exports = {
 };
 ```
 
+From here you can zip the bundled output up with your Apigee apiproxy and upload it as a new revision.
+
 ## API
 
 ### Lambda
