@@ -1,6 +1,6 @@
 # Apigee AWS SDK
 
-![npm](https://img.shields.io/npm/v/npm)
+![npm](https://img.shields.io/npm/v/apigee-aws-sdk)
 ![](https://github.com/karopolopoulos/apigee-aws-sdk/workflows/ci/badge.svg)
 
 This package is primarily focused at enabling Apigee users to integrate with AWS services directly from a [JavaScript Policy](https://docs.apigee.com/api-platform/reference/policies/javascript-policy).
@@ -69,7 +69,25 @@ There are a few steps to achieve this:
 $ npm install --save-dev webpack webpack-cli
 ```
 
-2. h
+#### Create `webpack.config.js` file
+
+Here you can specify the entry point to your javascript policy in order to bundle it and all of its dependencies.
+
+```js
+const path = require('path');
+
+module.exports = {
+  entry: {
+    index: './index.js'
+    // other: './other.js' (if you have other files)
+  },
+  output: {
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, './build')
+  },
+  mode: 'production'
+};
+```
 
 ## API
 
