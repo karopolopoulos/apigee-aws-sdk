@@ -43,8 +43,8 @@ var options = {
 var lambda = new apigeeAwsSdk.Lambda(options);
 
 var params = {
-  functionName: 'hello-world',
-  payload: <string>
+  FunctionName: 'hello-world',
+  Payload: <string>
 };
 lambda.invoke(params, function(err, data) {
   if (err) {
