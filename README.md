@@ -28,21 +28,19 @@ npm install apigee-aws-sdk
 ```js
 // import entire SDK
 var apigeeAwsSdk = require('apigee-aws-sdk');
-// import individual modules
-var Lambda = require('apigee-aws-sdk/modules/lambda');
 ```
 
 ### Usage
 
 ```js
-var Lambda = require('apigee-aws-sdk/modules/lambda');
+var apigeeAwsSdk = require('apigee-aws-sdk');
 
 var options = {
   accessKeyId: '<value>',
   secretAccessKey: '<value>',
   region: '<value>'
 };
-var lambda = new Lambda(options);
+var lambda = new apigeeAwsSdk.Lambda(options);
 
 var params = {
   functionName: 'hello-world',
