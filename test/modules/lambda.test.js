@@ -1,4 +1,7 @@
 const Lambda = require('../../lib/modules/lambda');
+const http = require('../../lib/helpers/http');
+
+jest.mock('../../lib/helpers/http');
 
 describe('Lambda Module', () => {
   const options = {
@@ -9,29 +12,27 @@ describe('Lambda Module', () => {
   const lambda = new Lambda(options);
 
   describe('invoke', () => {
-    const response = {
-      StatusCode: 200,
-      ExecutedVersion: 'value',
-      LogResult: 'value',
-      Payload: '{"message":"A test response"}'
-    };
-
-    const httpMock = {
-      open: jest.fn(),
-      setRequestHeader: jest.fn(),
-      send: jest.fn(),
-      status: response.StatusCode,
-      getResponseHeader: jest.fn(() => response.ExecutedVersion),
-      response: response.Payload
-    };
-    // eslint-disable-next-line no-undef
-    window.XMLHttpRequest = jest.fn(() => httpMock);
-
     beforeEach(() => {
       jest.clearAllMocks();
     });
 
     test('should successfully invoke lambda', () => {
+      const response = {
+        StatusCode: 200,
+        ExecutedVersion: 'value',
+        LogResult: 'value',
+        Payload: '{"message":"A test response"}'
+      };
+
+      http.mockImplementation(() => ({
+        statusCode: response.StatusCode,
+        headers: {
+          'X-Amz-Executed-Version': response.ExecutedVersion,
+          'X-Amz-Log-Result': response.LogResult
+        },
+        body: response.Payload
+      }));
+
       const params = {
         FunctionName: 'hello-world',
         Payload: '{"message":"A test request"}',
@@ -43,68 +44,28 @@ describe('Lambda Module', () => {
         expect(err).toBeNull();
         expect(data).toMatchObject(response);
 
-        expect(httpMock.open).toHaveBeenCalledWith(
-          'POST',
-          `https://lambda.${options.region}.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations?Qualifier=${params.Qualifier}`,
-          false
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(7);
-
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          1,
-          'Content-Type',
-          'application/json'
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          2,
-          'Host',
-          `lambda.${options.region}.amazonaws.com`
-        );
-
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          3,
-          'X-Amz-Date',
-          expect.anything()
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          4,
-          'X-Amz-Invocation-Type',
-          'RequestResponse'
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          5,
-          'X-Amz-Log-Type',
-          params.LogType
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          6,
-          'X-Amz-Client-Context',
-          params.ClientContext
-        );
-        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-          7,
-          'Authorization',
-          expect.anything()
-        );
-        expect(httpMock.send).toHaveBeenCalledTimes(1);
-        expect(httpMock.getResponseHeader).toHaveBeenCalledTimes(3);
-        expect(httpMock.getResponseHeader).toHaveBeenNthCalledWith(
-          1,
-          'X-Amz-Executed-Version'
-        );
-        expect(httpMock.getResponseHeader).toHaveBeenNthCalledWith(
-          2,
-          'X-Amz-Function-Error'
-        );
-        expect(httpMock.getResponseHeader).toHaveBeenNthCalledWith(
-          3,
-          'X-Amz-Log-Result'
+        expect(http).toHaveBeenCalledTimes(1);
+        expect(http).toHaveBeenCalledWith(
+          expect.objectContaining({
+            method: 'POST',
+            url: `https://lambda.ap-southeast-2.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations?Qualifier=${params.Qualifier}`,
+            headers: {
+              Authorization: expect.any(String),
+              'Content-Type': 'application/json',
+              Host: 'lambda.ap-southeast-2.amazonaws.com',
+              'X-Amz-Client-Context': params.ClientContext,
+              'X-Amz-Date': expect.any(String),
+              'X-Amz-Invocation-Type': 'RequestResponse',
+              'X-Amz-Log-Type': params.LogType
+            },
+            body: params.Payload
+          })
         );
       });
     });
 
     test('should return all errors unchanged', () => {
-      httpMock.send.mockImplementation(() => {
+      http.mockImplementation(() => {
         throw new Error('this is an error');
       });
 
