@@ -1,16 +1,26 @@
 var http = require('../../lib/helpers/http');
 
 describe('http Helper', () => {
-  test('sends call using XMLHttpRequest', () => {
-    const expectedResponse = {
-      statusCode: 200,
-      headers: {
-        'A-Header': 'a-value',
-        'B-Header': 'b-value'
-      },
-      body: '{"message":"A test response"}'
-    };
+  const params = {
+    method: 'POST',
+    url: 'https://this-is-a-url.com/a/path',
+    headers: {
+      'Input-Header': 'input-value',
+      'Input-Header-2': 'input-value-2'
+    },
+    body: '{"message":"A test request"}'
+  };
 
+  const expectedResponse = {
+    statusCode: 200,
+    headers: {
+      'A-Header': 'a-value',
+      'B-Header': 'b-value'
+    },
+    body: '{"message":"A test response"}'
+  };
+
+  test('sends call using XMLHttpRequest', () => {
     const httpMock = {
       open: jest.fn(),
       setRequestHeader: jest.fn(),
@@ -24,15 +34,6 @@ describe('http Helper', () => {
     // eslint-disable-next-line no-undef
     window.XMLHttpRequest = jest.fn(() => httpMock);
 
-    const params = {
-      method: 'POST',
-      url: 'https://this-is-a-url.com/a/path',
-      headers: {
-        'Input-Header': 'input-value',
-        'Input-Header-2': 'input-value-2'
-      },
-      body: '{"message":"A test request"}'
-    };
     const response = http(params);
 
     expect(response).toMatchObject(expectedResponse);
@@ -56,5 +57,45 @@ describe('http Helper', () => {
     expect(httpMock.getAllResponseHeaders).toHaveBeenCalledTimes(1);
   });
 
-  test('sends call using Request', () => {});
+  test('sends call using Request', () => {
+    // eslint-disable-next-line no-undef
+    window.XMLHttpRequest = undefined;
+    // eslint-disable-next-line no-undef
+    Request = jest.fn();
+    const httpMock = {
+      waitForComplete: jest.fn(),
+      isError: jest.fn(),
+      getResponse: jest.fn(() => ({
+        status: {
+          code: expectedResponse.statusCode
+        },
+        headers: expectedResponse.headers,
+        content: {
+          asJSON: JSON.parse(expectedResponse.body)
+        }
+      }))
+    };
+    // eslint-disable-next-line no-undef
+    httpClient = {
+      send: jest.fn(() => httpMock)
+    };
+
+    const response = http(params);
+
+    expect(response).toMatchObject(expectedResponse);
+    // eslint-disable-next-line no-undef
+    expect(Request).toHaveBeenCalledTimes(1);
+    // eslint-disable-next-line no-undef
+    expect(Request).toHaveBeenCalledWith(
+      params.url,
+      params.method,
+      params.headers,
+      params.body
+    );
+    // eslint-disable-next-line no-undef
+    expect(httpClient.send).toHaveBeenCalledTimes(1);
+    expect(httpMock.waitForComplete).toHaveBeenCalledTimes(1);
+    expect(httpMock.isError).toHaveBeenCalledTimes(1);
+    expect(httpMock.getResponse).toHaveBeenCalledTimes(1);
+  });
 });
