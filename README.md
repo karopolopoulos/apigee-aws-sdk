@@ -87,7 +87,13 @@ module.exports = {
 };
 ```
 
-From here you can zip the bundled output up with your Apigee apiproxy and upload it as a new revision.
+#### Bundling
+
+From here you can run the webpack command to bundle the packages then zip it up with your Apigee apiproxy and upload it as a new revision.
+
+```
+$ webpack --config webpack.config.js
+```
 
 ## API
 
