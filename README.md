@@ -1,9 +1,9 @@
-# Apigee AWS SDK
+# AWS SDK Light
 
-![npm](https://img.shields.io/npm/v/apigee-aws-sdk)
-![](https://github.com/karopolopoulos/apigee-aws-sdk/workflows/ci/badge.svg)
+![npm](https://img.shields.io/npm/v/aws-sdk-light)
+![](https://github.com/karopolopoulos/aws-sdk-light/workflows/ci/badge.svg)
 
-This package is primarily focused at enabling Apigee users to integrate with AWS services directly from a [JavaScript Policy](https://docs.apigee.com/api-platform/reference/policies/javascript-policy).
+This package is primarily focused at enabling Apigee users to integrate with AWS services directly from a [JavaScript Policy](https://docs.apigee.com/api-platform/reference/policies/javascript-policy). However it can certainly be used by anyone.
 
 Although there are already many great libraries that allow integration into AWS services (including the actual [aws-sdk](https://www.npmjs.com/package/aws-sdk)!) I found that the situation I was in did not allow me to use them :sob: :rage:.
 
@@ -18,29 +18,29 @@ Key things about why I made this:
 ## Installation
 
 ```shell
-npm install apigee-aws-sdk
+npm install aws-sdk-light
 ```
 
-## Examples
+## Overview
 
 ### Importing
 
 ```js
 // import entire SDK
-var apigeeAwsSdk = require('apigee-aws-sdk');
+var awsSdkLight = require('aws-sdk-light');
 ```
 
 ### Usage
 
 ```js
-var apigeeAwsSdk = require('apigee-aws-sdk');
+var awsSdkLight = require('aws-sdk-light');
 
 var options = {
   accessKeyId: '<value>',
   secretAccessKey: '<value>',
   region: '<value>'
 };
-var lambda = new apigeeAwsSdk.Lambda(options);
+var lambda = new awsSdkLight.Lambda(options);
 
 var params = {
   FunctionName: 'hello-world',
@@ -55,88 +55,7 @@ lambda.invoke(params, function(err, data) {
 });
 ```
 
-### Bundling for Apigee
+## Documentation
 
-Apigee does not allow you to import packages from a package manager for a Javascript Policy. Instead all the files must be uploaded together before deployment. This can be achieved by first bunding with [webpack](https://www.npmjs.com/package/webpack) then uploading the bundle as a new revision.
-
-There are a few steps to achieve this:
-
-#### Install webpack locally
-
-```
-$ npm install --save-dev webpack webpack-cli
-```
-
-#### Create `webpack.config.js` file
-
-Here you can specify the entry point to your javascript policy in order to bundle it and all of its dependencies.
-
-```js
-const path = require('path');
-
-module.exports = {
-  entry: {
-    index: './index.js'
-    // other: './other.js' (if you have other files)
-  },
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './build')
-  },
-  mode: 'production'
-};
-```
-
-#### Bundling
-
-From here you can run the webpack command to bundle the packages then zip it up with your Apigee apiproxy and upload it as a new revision.
-
-```
-$ webpack --config webpack.config.js
-```
-
-## API
-
-### Lambda
-
-#### new Lambda(options)
-
-Creates a new Lambda object.
-
-Parameters:
-
-- **options** **`Object`**
-  - accessKeyId `String` - your AWS access key ID
-  - secretAccessKey `String` - your AWS secret key
-  - region `String` - your AWS region
-
-#### lambda.invoke(params)
-
-Invokes a Lambda function. You can invoke a function synchronously (and wait for the response), or asynchronously.
-
-Parameters:
-
-- **params** **`Object`**
-  - FunctionName `String` **required** - the name of your lambda function
-  - Payload `String` - The stringified JSON that you want to provide to your Lambda function as input
-  - InvocationType `String` - how you would like to invoke your function. Choose from:
-    - `RequestResponse` (default) - invoke lambda synchronously
-    - `Event` - invoke lambda asynchronously
-    - `DryRun` - validate parameters without invoking lambda
-  - LogType `String` - include details of the execution log in your response. Choose from:
-    - `None` - don't supply any logs
-    - `Tail` - include logs
-  - ClientContext `String` - up to 3583 bytes of base64-encoded data about the invoking client to pass to the function in the context object
-  - Qualifier `String` - specify a version or alias to invoke a published version of the function
-
-Callback:
-
-- **err** **`Error`** - the error object returned from the request. Set to null if the request is successful
-- **data** **`Object`** - the data object returned from the request. Set to null if the request failed
-  - StatusCode `Integer` - the HTTP status code is in the 200 range for a successful request
-  - FunctionError `String` - if present, indicates that an error occurred during function execution. Options:
-    - `Handled` - the runtime caught an error thrown by the function and formatted it into a JSON document
-    - `Unhandled` - The runtime didn't handle the error. For example, the function ran out of memory or timed out
-  - LogResult `String` - the last 4 KB of the execution log, which is base64 encoded
-  - Payload `Buffer` - the response from the function, or an error object
-  - ExecutedVersion `String` - the version of the function that executed
+- [Guides](docs/guides.md)
+- [API Documentation](docs/api.md)

@@ -1,7 +1,7 @@
 {
   "name": "aws-sdk-light",
   "version": "1.0.3",
-  "description": "Invoke a lambda function directly from APIGEE",
+  "description": "A lightweight version of the AWS SDK that has minimal external dependencies and runs on systems with limited resources",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest test/**/*.test.js",
