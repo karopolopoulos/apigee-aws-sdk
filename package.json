@@ -1,6 +1,6 @@
 {
-  "name": "apigee-aws-sdk",
-  "version": "1.1.9",
+  "name": "aws-sdk-light",
+  "version": "1.0.0",
   "description": "Invoke a lambda function directly from APIGEE",
   "main": "lib/index.js",
   "scripts": {
@@ -9,11 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:karopolopoulos/apigee-aws-sdk.git"
+    "url": "git@github.com:karopolopoulos/aws-sdk-light.git"
   },
   "keywords": [
     "apigee",
     "aws",
+    "sdk",
     "lambda"
   ],
   "author": "Evan Karopoulos <evankaropoulos@gmail.com>",
