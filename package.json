@@ -1,6 +1,6 @@
 {
   "name": "aws-sdk-light",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Invoke a lambda function directly from APIGEE",
   "main": "lib/index.js",
   "scripts": {
