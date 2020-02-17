@@ -37,8 +37,7 @@ describe('Lambda Module', () => {
         FunctionName: 'hello-world',
         Payload: '{"message":"A test request"}',
         LogType: 'Tail',
-        ClientContext: '123',
-        Qualifier: '1.0'
+        ClientContext: '123'
       };
       lambda.invoke(params, (err, data) => {
         expect(err).toBeNull();
@@ -48,7 +47,7 @@ describe('Lambda Module', () => {
         expect(http).toHaveBeenCalledWith(
           expect.objectContaining({
             method: 'POST',
-            url: `https://lambda.ap-southeast-2.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations?Qualifier=${params.Qualifier}`,
+            url: `https://lambda.ap-southeast-2.amazonaws.com/2015-03-31/functions/${params.FunctionName}/invocations`,
             headers: {
               Authorization: expect.any(String),
               'Content-Type': 'application/json',

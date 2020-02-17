@@ -24,28 +24,28 @@ describe('signRequest Helper', () => {
     );
   });
 
-  // test('returns well formated signature for STS AssumeRole', () => {
-  //   const params = {
-  //     method: 'GET',
-  //     host: 'sts.amazonaws.com',
-  //     region: 'ap-southeast-2',
-  //     path: '/',
-  //     queryString:
-  //       'RoleArn=arn::123&RoleSessionName=testUser&Tags.member.1.Key=tag-value&Tags.member.1.Value=tag-value&TransitiveTagKeys.member.1=a&TransitiveTagKeys.member.2=b&Version=2011-06-15&Action=AssumeRole',
-  //     headers: {
-  //       Host: 'sts.amazonaws.com',
-  //       'X-Amz-Date': '20150830T123600Z'
-  //     },
-  //     datetime: '20150830T123600Z',
-  //     accessKey: 'AKIDEXAMPLE',
-  //     secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
-  //   };
-  //   const signature = signRequest(params);
+  test('returns well formated signature for STS AssumeRole', () => {
+    const params = {
+      method: 'POST',
+      host: 'sts.ap-southeast-2.amazonaws.com',
+      region: 'ap-southeast-2',
+      path: '/',
+      queryString:
+        'RoleArn=arn::123&RoleSessionName=testUser&Tags.member.1.Key=tag-value&Tags.member.1.Value=tag-value&TransitiveTagKeys.member.1=a&TransitiveTagKeys.member.2=b&Version=2011-06-15&Action=AssumeRole',
+      headers: {
+        Host: 'sts.ap-southeast-2.amazonaws.com',
+        'X-Amz-Date': '20150830T123600Z'
+      },
+      datetime: '20150830T123600Z',
+      accessKey: 'AKIDEXAMPLE',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+    };
+    const signature = signRequest(params);
 
-  //   expect(signature).toEqual(
-  //     'AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/us-east-1/sts/aws4_request, SignedHeaders=host;x-amz-date, Signature=5d672d79c15b13162d9279b0855cfba6789a8edb4c82c400e06b5924a6f2b5d7'
-  //   );
-  // });
+    expect(signature).toEqual(
+      'AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/ap-southeast-2/sts/aws4_request, SignedHeaders=host;x-amz-date, Signature=e4afa09b7bb216fdbb7a11bd9c76d7c5d39f54976e8ff834966a4e423420c56b'
+    );
+  });
 
   test('returns well formated signature for Lambda Invoke', async () => {
     const params = {

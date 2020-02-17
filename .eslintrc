@@ -7,6 +7,7 @@
   "rules": {
     "no-var": "off",
     "prefer-template": "off",
+    "prefer-destructuring": "off",
     "no-underscore-dangle": "off",
     "vars-on-top": "off",
     "func-names": "off",

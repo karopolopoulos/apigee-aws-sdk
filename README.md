@@ -17,6 +17,8 @@ Key things about why I made this:
 
 ## Installation
 
+Available on [npm](https://www.npmjs.com/package/aws-sdk-light)
+
 ```shell
 npm install aws-sdk-light
 ```

@@ -11,8 +11,6 @@ describe('Core Module', () => {
 
     const core = new Core(options);
 
-    console.log(core);
-
     expect(core).toMatchObject({
       accessKeyId: '123',
       secretAccessKey: '123',
