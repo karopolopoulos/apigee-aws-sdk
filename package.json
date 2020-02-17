@@ -1,6 +1,6 @@
 {
   "name": "aws-sdk-light",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight version of the AWS SDK that has minimal external dependencies and runs on systems with limited resources",
   "main": "lib/index.js",
   "scripts": {
