@@ -30,6 +30,9 @@ npm install aws-sdk-light
 ```js
 // import entire SDK
 var awsSdkLight = require('aws-sdk-light');
+
+// import single module
+var awsSdkLight = require('aws-sdk-light/clients/lambda');
 ```
 
 ### Usage
