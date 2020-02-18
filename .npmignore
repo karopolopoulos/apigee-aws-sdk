@@ -1,0 +1,14 @@
+#folders
+.github
+.vscode
+coverage
+test
+docs
+
+#files
+.huskyrc
+.gitattributes
+.gitignore
+.eslintrc
+.lintstagedrc
+.prettierrc
