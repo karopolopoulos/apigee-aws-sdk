@@ -18,14 +18,37 @@ describe('STS Module', () => {
 
     test('should successfully invoke sts', () => {
       const response = {
-        StatusCode: 200,
-        Payload:
-          '{"Credentials": {"AccessKeyId": "456", "SecretAccessKey": "789", "SessionToken": "012", "Expiration": "2019-11-09T13:34:41Z"}, "AssumedRoleUser": {"AssumedRoleId": "123", "Arn": "arn::123"}, "PackedPolicySize": 1}'
+        AssumedRoleUser: {
+          Arn: 'arn::123/testUser',
+          AssumedRoleId: 'ABC123:testUser'
+        },
+        Credentials: {
+          AccessKeyId: '123456',
+          Expiration: '2020-02-28T03:25:41Z',
+          SecretAccessKey: '123456',
+          SessionToken: '123456'
+        }
       };
 
       http.mockImplementation(() => ({
-        statusCode: response.StatusCode,
-        body: response.Payload
+        statusCode: 200,
+        body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+            <AssumeRoleResult>
+                <AssumedRoleUser>
+                    <AssumedRoleId>ABC123:testUser</AssumedRoleId>
+                    <Arn>arn::123/testUser</Arn>
+                </AssumedRoleUser>
+                <Credentials>
+                    <AccessKeyId>123456</AccessKeyId>
+                    <SecretAccessKey>123456</SecretAccessKey>
+                    <SessionToken>123456</SessionToken>
+                    <Expiration>2020-02-28T03:25:41Z</Expiration>
+                </Credentials>
+            </AssumeRoleResult>
+            <ResponseMetadata>
+                <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
+            </ResponseMetadata>
+        </AssumeRoleResponse>`
       }));
 
       const params = {
@@ -68,14 +91,37 @@ describe('STS Module', () => {
       const stsWithSessionToken = new STS(optionsWithSessionToken);
 
       const response = {
-        StatusCode: 200,
-        Payload:
-          '{"Credentials": {"AccessKeyId": "456", "SecretAccessKey": "789", "SessionToken": "012", "Expiration": "2019-11-09T13:34:41Z"}, "AssumedRoleUser": {"AssumedRoleId": "123", "Arn": "arn::123"}, "PackedPolicySize": 1}'
+        AssumedRoleUser: {
+          Arn: 'arn::123/testUser',
+          AssumedRoleId: 'ABC123:testUser'
+        },
+        Credentials: {
+          AccessKeyId: '123456',
+          Expiration: '2020-02-28T03:25:41Z',
+          SecretAccessKey: '123456',
+          SessionToken: '123456'
+        }
       };
 
       http.mockImplementation(() => ({
-        statusCode: response.StatusCode,
-        body: response.Payload
+        statusCode: 200,
+        body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+            <AssumeRoleResult>
+                <AssumedRoleUser>
+                    <AssumedRoleId>ABC123:testUser</AssumedRoleId>
+                    <Arn>arn::123/testUser</Arn>
+                </AssumedRoleUser>
+                <Credentials>
+                    <AccessKeyId>123456</AccessKeyId>
+                    <SecretAccessKey>123456</SecretAccessKey>
+                    <SessionToken>123456</SessionToken>
+                    <Expiration>2020-02-28T03:25:41Z</Expiration>
+                </Credentials>
+            </AssumeRoleResult>
+            <ResponseMetadata>
+                <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
+            </ResponseMetadata>
+        </AssumeRoleResponse>`
       }));
 
       const params = {

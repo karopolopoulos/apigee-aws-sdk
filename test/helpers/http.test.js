@@ -1,4 +1,4 @@
-var http = require('../../lib/helpers/http');
+const http = require('../../lib/helpers/http');
 
 describe('http Helper', () => {
   const params = {
