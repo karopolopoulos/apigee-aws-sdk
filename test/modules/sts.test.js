@@ -157,12 +157,10 @@ describe('STS Module', () => {
 
     test('should handle error body from sts assume role', () => {
       const response = {
-        Error: {
-          Type: 'Sender',
-          Code: 'SignatureDoesNotMatch',
-          Message:
-            'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.'
-        }
+        Type: 'Sender',
+        Code: 'SignatureDoesNotMatch',
+        Message:
+          'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.'
       };
 
       http.mockImplementation(() => ({
@@ -189,8 +187,9 @@ describe('STS Module', () => {
         TransitiveTagKeys: ['a', 'b']
       };
       sts.assumeRole(params, (err, data) => {
-        expect(err).toBeNull();
-        expect(data).toMatchObject(response);
+        expect(data).toBeNull();
+        expect(err).toBeInstanceOf(Error);
+        expect(err).toEqual(new Error(JSON.stringify(response)));
 
         expect(http).toHaveBeenCalledTimes(1);
         expect(http).toHaveBeenCalledWith(
