@@ -16,7 +16,7 @@ describe('STS Module', () => {
       jest.clearAllMocks();
     });
 
-    test('should successfully invoke sts', () => {
+    test('should successfully invoke sts assume role', () => {
       const response = {
         AssumedRoleUser: {
           Arn: 'arn::123/testUser',
@@ -81,7 +81,7 @@ describe('STS Module', () => {
       });
     });
 
-    test('should successfully invoke sts with session token', () => {
+    test('should successfully invoke sts assume role with session token', () => {
       const optionsWithSessionToken = {
         accessKeyId: '123',
         secretAccessKey: '123',
@@ -155,6 +155,58 @@ describe('STS Module', () => {
       });
     });
 
+    test('should handle error body from sts assume role', () => {
+      const response = {
+        Error: {
+          Type: 'Sender',
+          Code: 'SignatureDoesNotMatch',
+          Message:
+            'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.'
+        }
+      };
+
+      http.mockImplementation(() => ({
+        statusCode: 200,
+        body: `<ErrorResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+            <Error>
+                <Type>Sender</Type>
+                <Code>SignatureDoesNotMatch</Code>
+                <Message>The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.</Message>
+            </Error>
+            <RequestId>5d1dfd4e-36f9-4d6d-a78e-90b72670c129</RequestId>
+        </ErrorResponse>`
+      }));
+
+      const params = {
+        RoleArn: 'arn::123',
+        RoleSessionName: 'testUser',
+        Tags: [
+          {
+            Key: 'tag-value',
+            Value: 'tag-value'
+          }
+        ],
+        TransitiveTagKeys: ['a', 'b']
+      };
+      sts.assumeRole(params, (err, data) => {
+        expect(err).toBeNull();
+        expect(data).toMatchObject(response);
+
+        expect(http).toHaveBeenCalledTimes(1);
+        expect(http).toHaveBeenCalledWith(
+          expect.objectContaining({
+            method: 'POST',
+            url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
+            headers: {
+              Authorization: expect.any(String),
+              Host: 'sts.ap-southeast-2.amazonaws.com',
+              'X-Amz-Date': expect.any(String)
+            }
+          })
+        );
+      });
+    });
+
     test('should return all errors unchanged', () => {
       http.mockImplementation(() => {
         throw new Error('this is an error');
@@ -173,6 +225,14 @@ describe('STS Module', () => {
     test('should throw required params error', () => {
       expect(() => {
         sts.assumeRole();
+      }).toThrow('Required parameters not included');
+
+      expect(() => {
+        sts.assumeRole({
+          RoleArn: '123',
+          RoleSessionName: '123',
+          Tags: [{ Key: 'aKey' }]
+        });
       }).toThrow('Required parameters not included');
     });
   });
