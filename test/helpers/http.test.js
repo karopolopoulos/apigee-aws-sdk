@@ -32,27 +32,28 @@ describe('http Helper', () => {
       // eslint-disable-next-line no-undef
       window.XMLHttpRequest = jest.fn(() => httpMock);
 
-      const response = http(params);
-
-      expect(response).toMatchObject(expectedResponse);
-      expect(httpMock.open).toHaveBeenCalledWith(
-        params.method,
-        params.url,
-        false
-      );
-      expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(2);
-      expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-        1,
-        'Input-Header',
-        'input-value'
-      );
-      expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-        2,
-        'Input-Header-2',
-        'input-value-2'
-      );
-      expect(httpMock.send).toHaveBeenCalledTimes(1);
-      expect(httpMock.getAllResponseHeaders).toHaveBeenCalledTimes(1);
+      http(params, function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toMatchObject(expectedResponse);
+        expect(httpMock.open).toHaveBeenCalledWith(
+          params.method,
+          params.url,
+          false
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(2);
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          1,
+          'Input-Header',
+          'input-value'
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          2,
+          'Input-Header-2',
+          'input-value-2'
+        );
+        expect(httpMock.send).toHaveBeenCalledTimes(1);
+        expect(httpMock.getAllResponseHeaders).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('sends GET call using Request', () => {
@@ -79,22 +80,23 @@ describe('http Helper', () => {
         send: jest.fn(() => httpMock)
       };
 
-      const response = http(params);
-
-      expect(response).toMatchObject(expectedResponse);
-      // eslint-disable-next-line no-undef
-      expect(Request).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line no-undef
-      expect(Request).toHaveBeenCalledWith(
-        params.url,
-        params.method,
-        params.headers
-      );
-      // eslint-disable-next-line no-undef
-      expect(httpClient.send).toHaveBeenCalledTimes(1);
-      expect(httpMock.waitForComplete).toHaveBeenCalledTimes(1);
-      expect(httpMock.isError).toHaveBeenCalledTimes(1);
-      expect(httpMock.getResponse).toHaveBeenCalledTimes(1);
+      http(params, function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toMatchObject(expectedResponse);
+        // eslint-disable-next-line no-undef
+        expect(Request).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line no-undef
+        expect(Request).toHaveBeenCalledWith(
+          params.url,
+          params.method,
+          params.headers
+        );
+        // eslint-disable-next-line no-undef
+        expect(httpClient.send).toHaveBeenCalledTimes(1);
+        expect(httpMock.waitForComplete).toHaveBeenCalledTimes(1);
+        expect(httpMock.isError).toHaveBeenCalledTimes(1);
+        expect(httpMock.getResponse).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -132,27 +134,28 @@ describe('http Helper', () => {
       // eslint-disable-next-line no-undef
       window.XMLHttpRequest = jest.fn(() => httpMock);
 
-      const response = http(params);
-
-      expect(response).toMatchObject(expectedResponse);
-      expect(httpMock.open).toHaveBeenCalledWith(
-        params.method,
-        params.url,
-        false
-      );
-      expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(2);
-      expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-        1,
-        'Input-Header',
-        'input-value'
-      );
-      expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
-        2,
-        'Input-Header-2',
-        'input-value-2'
-      );
-      expect(httpMock.send).toHaveBeenCalledTimes(1);
-      expect(httpMock.getAllResponseHeaders).toHaveBeenCalledTimes(1);
+      http(params, function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toMatchObject(expectedResponse);
+        expect(httpMock.open).toHaveBeenCalledWith(
+          params.method,
+          params.url,
+          false
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenCalledTimes(2);
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          1,
+          'Input-Header',
+          'input-value'
+        );
+        expect(httpMock.setRequestHeader).toHaveBeenNthCalledWith(
+          2,
+          'Input-Header-2',
+          'input-value-2'
+        );
+        expect(httpMock.send).toHaveBeenCalledTimes(1);
+        expect(httpMock.getAllResponseHeaders).toHaveBeenCalledTimes(1);
+      });
     });
 
     test('sends POST call using Request', () => {
@@ -179,23 +182,24 @@ describe('http Helper', () => {
         send: jest.fn(() => httpMock)
       };
 
-      const response = http(params);
-
-      expect(response).toMatchObject(expectedResponse);
-      // eslint-disable-next-line no-undef
-      expect(Request).toHaveBeenCalledTimes(1);
-      // eslint-disable-next-line no-undef
-      expect(Request).toHaveBeenCalledWith(
-        params.url,
-        params.method,
-        params.headers,
-        params.body
-      );
-      // eslint-disable-next-line no-undef
-      expect(httpClient.send).toHaveBeenCalledTimes(1);
-      expect(httpMock.waitForComplete).toHaveBeenCalledTimes(1);
-      expect(httpMock.isError).toHaveBeenCalledTimes(1);
-      expect(httpMock.getResponse).toHaveBeenCalledTimes(1);
+      http(params, function(err, data) {
+        expect(err).toBeNull();
+        expect(data).toMatchObject(expectedResponse);
+        // eslint-disable-next-line no-undef
+        expect(Request).toHaveBeenCalledTimes(1);
+        // eslint-disable-next-line no-undef
+        expect(Request).toHaveBeenCalledWith(
+          params.url,
+          params.method,
+          params.headers,
+          params.body
+        );
+        // eslint-disable-next-line no-undef
+        expect(httpClient.send).toHaveBeenCalledTimes(1);
+        expect(httpMock.waitForComplete).toHaveBeenCalledTimes(1);
+        expect(httpMock.isError).toHaveBeenCalledTimes(1);
+        expect(httpMock.getResponse).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
@@ -215,15 +219,13 @@ describe('http Helper', () => {
     // eslint-disable-next-line no-undef
     Request = undefined;
 
-    let response;
     let error;
     try {
-      response = http(params);
+      http(params);
     } catch (err) {
       error = err;
     }
 
-    expect(response).toBeUndefined();
     expect(error).toBeInstanceOf(Error);
     expect(error).toEqual(new Error('No library to make http call'));
   });
