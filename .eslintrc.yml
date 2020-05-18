@@ -1,0 +1,21 @@
+extends:
+  - airbnb-base
+  - plugin:prettier/recommended
+  - plugin:jest/recommended
+rules:
+  no-var: 'off'
+  prefer-template: 'off'
+  prefer-destructuring: 'off'
+  no-underscore-dangle: 'off'
+  vars-on-top: 'off'
+  func-names: 'off'
+  no-use-before-define: 'off'
+  object-shorthand: 'off'
+plugins:
+  - jest
+env:
+  jest/globals: true
+  node: true
+  es6: true
+  jest: true
+  browser: true
