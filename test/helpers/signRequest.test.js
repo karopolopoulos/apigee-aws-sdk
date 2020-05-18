@@ -70,4 +70,28 @@ describe('signRequest Helper', () => {
       'AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20150830/ap-southeast-2/lambda/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-invocation-type, Signature=3ca3c3c9016656a6250ee5959f3be120de4ad9800c2fb0ae47e80dedfa19c501'
     );
   });
+
+  test('returns well formated signature for Kinesis Put Records', async () => {
+    const params = {
+      method: 'POST',
+      host: 'kinesis.ap-southeast-2.amazonaws.com',
+      region: 'ap-southeast-2',
+      path: '/2015-03-31/functions/hello-world/invocations',
+      queryString: '',
+      headers: {
+        'Content-Type': 'application/x-amz-json-1.1',
+        Host: 'kinesis.ap-southeast-2.amazonaws.com',
+        'X-Amz-Date': '20200518T130051Z',
+        'X-Amz-Target': 'Kinesis_20131202.PutRecords',
+      },
+      datetime: '20200518T130051Z',
+      accessKey: 'AKIDEXAMPLE',
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
+    };
+    const signature = signRequest(params);
+
+    expect(signature).toEqual(
+      'AWS4-HMAC-SHA256 Credential=AKIDEXAMPLE/20200518/ap-southeast-2/kinesis/aws4_request, SignedHeaders=content-type;host;x-amz-date;x-amz-target, Signature=68de86a46c32006eff7c7122f84d53f58465900dfa350c93a37a17df26845802'
+    );
+  });
 });

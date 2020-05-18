@@ -11,7 +11,7 @@ describe('STS Module', () => {
   };
   const sts = new STS(options);
 
-  describe('invoke', () => {
+  describe('assumeRole', () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });

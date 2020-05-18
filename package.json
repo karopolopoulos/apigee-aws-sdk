@@ -4,7 +4,8 @@
   "description": "A lightweight version of the AWS SDK that has minimal external dependencies and runs on systems with limited resources",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest test/**/*.test.js",
+    "test": "jest",
+    "test:watch": "jest --coverage --watch --verbose",
     "lint": "lint-staged"
   },
   "repository": {
@@ -32,6 +33,7 @@
     "prettier": "^2.0.5"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "crypto-js": "^4.0.0",
     "xml2js": "^0.4.23"
   }
