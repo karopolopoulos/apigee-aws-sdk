@@ -6,7 +6,7 @@ describe('Core Module', () => {
       accessKeyId: '123',
       secretAccessKey: '123',
       sessionToken: '123',
-      region: 'ap-southeast-2',
+      region: 'ap-southeast-2'
     };
 
     const core = new Core(options);
@@ -15,7 +15,7 @@ describe('Core Module', () => {
       accessKeyId: '123',
       secretAccessKey: '123',
       sessionToken: '123',
-      region: 'ap-southeast-2',
+      region: 'ap-southeast-2'
     });
   });
 });

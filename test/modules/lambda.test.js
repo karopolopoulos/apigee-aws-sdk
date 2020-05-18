@@ -7,7 +7,7 @@ describe('Lambda Module', () => {
   const options = {
     accessKeyId: '123',
     secretAccessKey: '123',
-    region: 'ap-southeast-2',
+    region: 'ap-southeast-2'
   };
   const lambda = new Lambda(options);
 
@@ -21,23 +21,23 @@ describe('Lambda Module', () => {
         StatusCode: 200,
         ExecutedVersion: 'value',
         LogResult: 'value',
-        Payload: '{"message":"A test response"}',
+        Payload: '{"message":"A test response"}'
       };
 
       http.mockImplementation(() => ({
         statusCode: response.StatusCode,
         headers: {
           'X-Amz-Executed-Version': response.ExecutedVersion,
-          'X-Amz-Log-Result': response.LogResult,
+          'X-Amz-Log-Result': response.LogResult
         },
-        body: response.Payload,
+        body: response.Payload
       }));
 
       const params = {
         FunctionName: 'hello-world',
         Payload: '{"message":"A test request"}',
         LogType: 'Tail',
-        ClientContext: '123',
+        ClientContext: '123'
       };
       lambda.invoke(params, (err, data) => {
         expect(err).toBeNull();
@@ -55,9 +55,9 @@ describe('Lambda Module', () => {
               'X-Amz-Client-Context': params.ClientContext,
               'X-Amz-Date': expect.any(String),
               'X-Amz-Invocation-Type': 'RequestResponse',
-              'X-Amz-Log-Type': params.LogType,
+              'X-Amz-Log-Type': params.LogType
             },
-            body: params.Payload,
+            body: params.Payload
           })
         );
       });
@@ -68,7 +68,7 @@ describe('Lambda Module', () => {
         accessKeyId: '123',
         secretAccessKey: '123',
         sessionToken: '123',
-        region: 'ap-southeast-2',
+        region: 'ap-southeast-2'
       };
       const lambdaWithSessionToken = new Lambda(optionsWithSessionToken);
 
@@ -76,16 +76,16 @@ describe('Lambda Module', () => {
         StatusCode: 200,
         ExecutedVersion: 'value',
         LogResult: 'value',
-        Payload: '{"message":"A test response"}',
+        Payload: '{"message":"A test response"}'
       };
 
       http.mockImplementation(() => ({
         statusCode: response.StatusCode,
         headers: {
           'X-Amz-Executed-Version': response.ExecutedVersion,
-          'X-Amz-Log-Result': response.LogResult,
+          'X-Amz-Log-Result': response.LogResult
         },
-        body: response.Payload,
+        body: response.Payload
       }));
 
       const params = {
@@ -93,7 +93,7 @@ describe('Lambda Module', () => {
         Payload: '{"message":"A test request"}',
         LogType: 'Tail',
         ClientContext: '123',
-        Qualifier: '1.0',
+        Qualifier: '1.0'
       };
       lambdaWithSessionToken.invoke(params, (err, data) => {
         expect(err).toBeNull();
@@ -112,9 +112,9 @@ describe('Lambda Module', () => {
               'X-Amz-Date': expect.any(String),
               'X-Amz-Invocation-Type': 'RequestResponse',
               'X-Amz-Log-Type': params.LogType,
-              'X-Amz-Security-Token': '123',
+              'X-Amz-Security-Token': '123'
             },
-            body: params.Payload,
+            body: params.Payload
           })
         );
       });
@@ -127,7 +127,7 @@ describe('Lambda Module', () => {
 
       const params = {
         FunctionName: 'hello-world',
-        Payload: '{"message":"A test request"}',
+        Payload: '{"message":"A test request"}'
       };
       lambda.invoke(params, (err, data) => {
         expect(data).toBeNull();

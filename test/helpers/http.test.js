@@ -7,16 +7,16 @@ describe('http Helper', () => {
       url: 'https://this-is-a-url.com/a/path',
       headers: {
         'Input-Header': 'input-value',
-        'Input-Header-2': 'input-value-2',
-      },
+        'Input-Header-2': 'input-value-2'
+      }
     };
 
     const expectedResponse = {
       statusCode: 200,
       headers: {
         'A-Header': 'a-value',
-        'B-Header': 'b-value',
-      },
+        'B-Header': 'b-value'
+      }
     };
 
     test('sends GET call using XMLHttpRequest', () => {
@@ -27,7 +27,7 @@ describe('http Helper', () => {
         status: expectedResponse.statusCode,
         getAllResponseHeaders: jest.fn(
           () => 'a-header: a-value\r\nb-header: b-value\r\n'
-        ),
+        )
       };
       window.XMLHttpRequest = jest.fn(() => httpMock);
 
@@ -65,17 +65,17 @@ describe('http Helper', () => {
         isSuccess: jest.fn(),
         getResponse: jest.fn(() => ({
           status: {
-            code: expectedResponse.statusCode,
+            code: expectedResponse.statusCode
           },
           headers: expectedResponse.headers,
           content: {
-            asJSON: undefined,
-          },
-        })),
+            asJSON: undefined
+          }
+        }))
       };
       // eslint-disable-next-line no-undef
       httpClient = {
-        send: jest.fn(() => httpMock),
+        send: jest.fn(() => httpMock)
       };
 
       http(params, function (err, data) {
@@ -102,18 +102,18 @@ describe('http Helper', () => {
       url: 'https://this-is-a-url.com/a/path',
       headers: {
         'Input-Header': 'input-value',
-        'Input-Header-2': 'input-value-2',
+        'Input-Header-2': 'input-value-2'
       },
-      body: '{"message":"A test request"}',
+      body: '{"message":"A test request"}'
     };
 
     const expectedResponse = {
       statusCode: 200,
       headers: {
         'A-Header': 'a-value',
-        'B-Header': 'b-value',
+        'B-Header': 'b-value'
       },
-      body: '{"message":"A test response"}',
+      body: '{"message":"A test response"}'
     };
 
     test('sends POST call using XMLHttpRequest', () => {
@@ -125,7 +125,7 @@ describe('http Helper', () => {
         getAllResponseHeaders: jest.fn(
           () => 'a-header: a-value\r\nb-header: b-value\r\n'
         ),
-        response: expectedResponse.body,
+        response: expectedResponse.body
       };
       window.XMLHttpRequest = jest.fn(() => httpMock);
 
@@ -163,17 +163,17 @@ describe('http Helper', () => {
         isSuccess: jest.fn(),
         getResponse: jest.fn(() => ({
           status: {
-            code: expectedResponse.statusCode,
+            code: expectedResponse.statusCode
           },
           headers: expectedResponse.headers,
           content: {
-            asJSON: JSON.parse(expectedResponse.body),
-          },
-        })),
+            asJSON: JSON.parse(expectedResponse.body)
+          }
+        }))
       };
       // eslint-disable-next-line no-undef
       httpClient = {
-        send: jest.fn(() => httpMock),
+        send: jest.fn(() => httpMock)
       };
 
       http(params, function (err, data) {
@@ -201,9 +201,9 @@ describe('http Helper', () => {
       url: 'https://this-is-a-url.com/a/path',
       headers: {
         'Input-Header': 'input-value',
-        'Input-Header-2': 'input-value-2',
+        'Input-Header-2': 'input-value-2'
       },
-      body: '{"message":"A test request"}',
+      body: '{"message":"A test request"}'
     };
 
     window.XMLHttpRequest = undefined;

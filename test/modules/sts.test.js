@@ -7,7 +7,7 @@ describe('STS Module', () => {
   const options = {
     accessKeyId: '123',
     secretAccessKey: '123',
-    region: 'ap-southeast-2',
+    region: 'ap-southeast-2'
   };
   const sts = new STS(options);
 
@@ -20,14 +20,14 @@ describe('STS Module', () => {
       const response = {
         AssumedRoleUser: {
           Arn: 'arn::123/testUser',
-          AssumedRoleId: 'ABC123:testUser',
+          AssumedRoleId: 'ABC123:testUser'
         },
         Credentials: {
           AccessKeyId: '123456',
           Expiration: '2020-02-28T03:25:41Z',
           SecretAccessKey: '123456',
-          SessionToken: '123456',
-        },
+          SessionToken: '123456'
+        }
       };
 
       http.mockImplementation(() => ({
@@ -48,7 +48,7 @@ describe('STS Module', () => {
             <ResponseMetadata>
                 <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
             </ResponseMetadata>
-        </AssumeRoleResponse>`,
+        </AssumeRoleResponse>`
       }));
 
       const params = {
@@ -57,10 +57,10 @@ describe('STS Module', () => {
         Tags: [
           {
             Key: 'tag-value',
-            Value: 'tag-value',
-          },
+            Value: 'tag-value'
+          }
         ],
-        TransitiveTagKeys: ['a', 'b'],
+        TransitiveTagKeys: ['a', 'b']
       };
       sts.assumeRole(params, (err, data) => {
         expect(err).toBeNull();
@@ -74,8 +74,8 @@ describe('STS Module', () => {
             headers: {
               Authorization: expect.any(String),
               Host: 'sts.ap-southeast-2.amazonaws.com',
-              'X-Amz-Date': expect.any(String),
-            },
+              'X-Amz-Date': expect.any(String)
+            }
           })
         );
       });
@@ -86,21 +86,21 @@ describe('STS Module', () => {
         accessKeyId: '123',
         secretAccessKey: '123',
         sessionToken: '123',
-        region: 'ap-southeast-2',
+        region: 'ap-southeast-2'
       };
       const stsWithSessionToken = new STS(optionsWithSessionToken);
 
       const response = {
         AssumedRoleUser: {
           Arn: 'arn::123/testUser',
-          AssumedRoleId: 'ABC123:testUser',
+          AssumedRoleId: 'ABC123:testUser'
         },
         Credentials: {
           AccessKeyId: '123456',
           Expiration: '2020-02-28T03:25:41Z',
           SecretAccessKey: '123456',
-          SessionToken: '123456',
-        },
+          SessionToken: '123456'
+        }
       };
 
       http.mockImplementation(() => ({
@@ -121,7 +121,7 @@ describe('STS Module', () => {
             <ResponseMetadata>
                 <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
             </ResponseMetadata>
-        </AssumeRoleResponse>`,
+        </AssumeRoleResponse>`
       }));
 
       const params = {
@@ -130,10 +130,10 @@ describe('STS Module', () => {
         Tags: [
           {
             Key: 'tag-value',
-            Value: 'tag-value',
-          },
+            Value: 'tag-value'
+          }
         ],
-        TransitiveTagKeys: ['a', 'b'],
+        TransitiveTagKeys: ['a', 'b']
       };
       stsWithSessionToken.assumeRole(params, (err, data) => {
         expect(err).toBeNull();
@@ -148,8 +148,8 @@ describe('STS Module', () => {
               Authorization: expect.any(String),
               Host: 'sts.ap-southeast-2.amazonaws.com',
               'X-Amz-Date': expect.any(String),
-              'X-Amz-Security-Token': '123',
-            },
+              'X-Amz-Security-Token': '123'
+            }
           })
         );
       });
@@ -160,7 +160,7 @@ describe('STS Module', () => {
         Type: 'Sender',
         Code: 'SignatureDoesNotMatch',
         Message:
-          'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.',
+          'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.'
       };
 
       http.mockImplementation(() => ({
@@ -172,7 +172,7 @@ describe('STS Module', () => {
                 <Message>The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.</Message>
             </Error>
             <RequestId>5d1dfd4e-36f9-4d6d-a78e-90b72670c129</RequestId>
-        </ErrorResponse>`,
+        </ErrorResponse>`
       }));
 
       const params = {
@@ -181,10 +181,10 @@ describe('STS Module', () => {
         Tags: [
           {
             Key: 'tag-value',
-            Value: 'tag-value',
-          },
+            Value: 'tag-value'
+          }
         ],
-        TransitiveTagKeys: ['a', 'b'],
+        TransitiveTagKeys: ['a', 'b']
       };
       sts.assumeRole(params, (err, data) => {
         expect(data).toBeNull();
@@ -199,8 +199,8 @@ describe('STS Module', () => {
             headers: {
               Authorization: expect.any(String),
               Host: 'sts.ap-southeast-2.amazonaws.com',
-              'X-Amz-Date': expect.any(String),
-            },
+              'X-Amz-Date': expect.any(String)
+            }
           })
         );
       });
@@ -213,7 +213,7 @@ describe('STS Module', () => {
 
       const params = {
         RoleArn: 'arn::123',
-        RoleSessionName: 'testUser',
+        RoleSessionName: 'testUser'
       };
       sts.assumeRole(params, (err, data) => {
         expect(data).toBeNull();
@@ -230,7 +230,7 @@ describe('STS Module', () => {
         sts.assumeRole({
           RoleArn: '123',
           RoleSessionName: '123',
-          Tags: [{ Key: 'aKey' }],
+          Tags: [{ Key: 'aKey' }]
         });
       }).toThrow('Required parameters not included');
     });

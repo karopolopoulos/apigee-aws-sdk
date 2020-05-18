@@ -7,7 +7,7 @@ describe('STS Module', () => {
   const options = {
     accessKeyId: '123',
     secretAccessKey: '123',
-    region: 'ap-southeast-2',
+    region: 'ap-southeast-2'
   };
   const kinesis = new Kinesis(options);
 
@@ -23,24 +23,24 @@ describe('STS Module', () => {
           {
             SequenceNumber:
               '49543463076548007577105092703039560359975228518395019266',
-            ShardId: 'shardId-000000000000',
-          },
-        ],
+            ShardId: 'shardId-000000000000'
+          }
+        ]
       };
 
       http.mockImplementation(() => ({
         statusCode: 200,
-        body: JSON.stringify(response),
+        body: JSON.stringify(response)
       }));
 
       const params = {
         Records: [
           {
             Data: 'dmFsdWU=',
-            PartitionKey: 'partitionKey1',
-          },
+            PartitionKey: 'partitionKey1'
+          }
         ],
-        StreamName: 'exampleStreamName',
+        StreamName: 'exampleStreamName'
       };
       kinesis.putRecords(params, (err, data) => {
         expect(err).toBeNull();
@@ -55,9 +55,9 @@ describe('STS Module', () => {
               Authorization: expect.any(String),
               Host: 'kinesis.ap-southeast-2.amazonaws.com',
               'X-Amz-Date': expect.any(String),
-              'X-Amz-Target': 'Kinesis_20131202.PutRecords',
+              'X-Amz-Target': 'Kinesis_20131202.PutRecords'
             },
-            body: JSON.stringify(params),
+            body: JSON.stringify(params)
           })
         );
       });
@@ -68,7 +68,7 @@ describe('STS Module', () => {
         accessKeyId: '123',
         secretAccessKey: '123',
         sessionToken: '123',
-        region: 'ap-southeast-2',
+        region: 'ap-southeast-2'
       };
       const kinesisWithSessionToken = new Kinesis(optionsWithSessionToken);
 
@@ -78,24 +78,24 @@ describe('STS Module', () => {
           {
             SequenceNumber:
               '49543463076548007577105092703039560359975228518395019266',
-            ShardId: 'shardId-000000000000',
-          },
-        ],
+            ShardId: 'shardId-000000000000'
+          }
+        ]
       };
 
       http.mockImplementation(() => ({
         statusCode: 200,
-        body: JSON.stringify(response),
+        body: JSON.stringify(response)
       }));
 
       const params = {
         Records: [
           {
             Data: 'dmFsdWU=',
-            PartitionKey: 'partitionKey1',
-          },
+            PartitionKey: 'partitionKey1'
+          }
         ],
-        StreamName: 'exampleStreamName',
+        StreamName: 'exampleStreamName'
       };
       kinesisWithSessionToken.putRecords(params, (err, data) => {
         expect(err).toBeNull();
@@ -111,9 +111,9 @@ describe('STS Module', () => {
               Host: 'kinesis.ap-southeast-2.amazonaws.com',
               'X-Amz-Date': expect.any(String),
               'X-Amz-Security-Token': '123',
-              'X-Amz-Target': 'Kinesis_20131202.PutRecords',
+              'X-Amz-Target': 'Kinesis_20131202.PutRecords'
             },
-            body: JSON.stringify(params),
+            body: JSON.stringify(params)
           })
         );
       });
@@ -128,10 +128,10 @@ describe('STS Module', () => {
         Records: [
           {
             Data: 'dmFsdWU=',
-            PartitionKey: 'partitionKey1',
-          },
+            PartitionKey: 'partitionKey1'
+          }
         ],
-        StreamName: 'exampleStreamName',
+        StreamName: 'exampleStreamName'
       };
       kinesis.putRecords(params, (err, data) => {
         expect(data).toBeNull();
@@ -146,7 +146,7 @@ describe('STS Module', () => {
 
       expect(() => {
         kinesis.putRecords({
-          Records: [],
+          Records: []
         });
       }).toThrow('Required parameters not included');
     });
