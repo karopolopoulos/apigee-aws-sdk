@@ -8,8 +8,8 @@ describe('utilities Helper', () => {
         arrayStringParam: ['array-value-1', 'array-value-2'],
         arrayObjectParam: [
           { arrayObjectParam1: 'a' },
-          { arrayObjectParam1: 'b', arrayObjectParam2: '1' }
-        ]
+          { arrayObjectParam1: 'b', arrayObjectParam2: '1' },
+        ],
       };
 
       const queryString = utilities.generateQueryString(queryParams);

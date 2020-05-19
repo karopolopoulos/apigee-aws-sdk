@@ -11,11 +11,11 @@ describe('signRequest Helper', () => {
       headers: {
         Host: 'iam.amazonaws.com',
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-        'X-Amz-Date': '20150830T123600Z'
+        'X-Amz-Date': '20150830T123600Z',
       },
       datetime: '20150830T123600Z',
       accessKey: 'AKIDEXAMPLE',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
     };
     const signature = signRequest(params);
 
@@ -34,11 +34,11 @@ describe('signRequest Helper', () => {
         'RoleArn=arn::123&RoleSessionName=testUser&Tags.member.1.Key=tag-value&Tags.member.1.Value=tag-value&TransitiveTagKeys.member.1=a&TransitiveTagKeys.member.2=b&Version=2011-06-15&Action=AssumeRole',
       headers: {
         Host: 'sts.ap-southeast-2.amazonaws.com',
-        'X-Amz-Date': '20150830T123600Z'
+        'X-Amz-Date': '20150830T123600Z',
       },
       datetime: '20150830T123600Z',
       accessKey: 'AKIDEXAMPLE',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
     };
     const signature = signRequest(params);
 
@@ -58,11 +58,11 @@ describe('signRequest Helper', () => {
         Host: 'lambda.ap-southeast-2.amazonaws.com',
         'Content-Type': 'application/json',
         'X-Amz-Date': '20150830T123600Z',
-        'X-Amz-Invocation-Type': 'RequestResponse'
+        'X-Amz-Invocation-Type': 'RequestResponse',
       },
       datetime: '20150830T123600Z',
       accessKey: 'AKIDEXAMPLE',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
     };
     const signature = signRequest(params);
 
@@ -82,11 +82,11 @@ describe('signRequest Helper', () => {
         'Content-Type': 'application/x-amz-json-1.1',
         Host: 'kinesis.ap-southeast-2.amazonaws.com',
         'X-Amz-Date': '20200518T130051Z',
-        'X-Amz-Target': 'Kinesis_20131202.PutRecords'
+        'X-Amz-Target': 'Kinesis_20131202.PutRecords',
       },
       datetime: '20200518T130051Z',
       accessKey: 'AKIDEXAMPLE',
-      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY'
+      secretKey: 'wJalrXUtnFEMI/K7MDENG+bPxRfiCYEXAMPLEKEY',
     };
     const signature = signRequest(params);
 
