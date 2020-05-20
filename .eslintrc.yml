@@ -11,6 +11,7 @@ rules:
   func-names: 'off'
   no-use-before-define: 'off'
   object-shorthand: 'off'
+  no-param-reassign: 'off'
 plugins:
   - jest
 env:

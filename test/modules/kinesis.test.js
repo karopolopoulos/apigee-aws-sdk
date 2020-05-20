@@ -70,6 +70,60 @@ describe('Kinesis Module', () => {
       });
     });
 
+    test('should successfully invoke kinesis put records with non base 64 encoded string', () => {
+      return new Promise((done) => {
+        const response = {
+          FailedRecordCount: 0,
+          Records: [
+            {
+              SequenceNumber:
+                '49543463076548007577105092703039560359975228518395019266',
+              ShardId: 'shardId-000000000000',
+            },
+          ],
+        };
+
+        http.mockImplementation((_, callback) => {
+          return callback(null, {
+            statusCode: 200,
+            body: response,
+          });
+        });
+
+        const params = {
+          Records: [
+            {
+              Data: 'this is an example string',
+              PartitionKey: 'partitionKey1',
+            },
+          ],
+          StreamName: 'exampleStreamName',
+        };
+        kinesis.putRecords(params, (err, data) => {
+          expect(err).toBeNull();
+          expect(data).toMatchObject(response);
+
+          expect(http).toHaveBeenCalledTimes(1);
+          expect(http).toHaveBeenCalledWith(
+            expect.objectContaining({
+              method: 'POST',
+              url: `https://kinesis.ap-southeast-2.amazonaws.com`,
+              headers: {
+                Authorization: expect.any(String),
+                'Content-Type': 'application/x-amz-json-1.1',
+                Host: 'kinesis.ap-southeast-2.amazonaws.com',
+                'X-Amz-Date': expect.any(String),
+                'X-Amz-Target': 'Kinesis_20131202.PutRecords',
+              },
+              body: JSON.stringify(params),
+            }),
+            expect.any(Function)
+          );
+          done();
+        });
+      });
+    });
+
     test('should successfully invoke kinesis put records with session token', () => {
       return new Promise((done) => {
         const optionsWithSessionToken = {
