@@ -17,22 +17,24 @@ describe('STS Module', () => {
     });
 
     test('should successfully invoke sts assume role', () => {
-      const response = {
-        AssumedRoleUser: {
-          Arn: 'arn::123/testUser',
-          AssumedRoleId: 'ABC123:testUser',
-        },
-        Credentials: {
-          AccessKeyId: '123456',
-          Expiration: '2020-02-28T03:25:41Z',
-          SecretAccessKey: '123456',
-          SessionToken: '123456',
-        },
-      };
+      return new Promise((done) => {
+        const response = {
+          AssumedRoleUser: {
+            Arn: 'arn::123/testUser',
+            AssumedRoleId: 'ABC123:testUser',
+          },
+          Credentials: {
+            AccessKeyId: '123456',
+            Expiration: '2020-02-28T03:25:41Z',
+            SecretAccessKey: '123456',
+            SessionToken: '123456',
+          },
+        };
 
-      http.mockImplementation(() => ({
-        statusCode: 200,
-        body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+        http.mockImplementation((_, callback) => {
+          return callback(null, {
+            statusCode: 200,
+            body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
             <AssumeRoleResult>
                 <AssumedRoleUser>
                     <AssumedRoleId>ABC123:testUser</AssumedRoleId>
@@ -49,63 +51,69 @@ describe('STS Module', () => {
                 <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
             </ResponseMetadata>
         </AssumeRoleResponse>`,
-      }));
+          });
+        });
 
-      const params = {
-        RoleArn: 'arn::123',
-        RoleSessionName: 'testUser',
-        Tags: [
-          {
-            Key: 'tag-value',
-            Value: 'tag-value',
-          },
-        ],
-        TransitiveTagKeys: ['a', 'b'],
-      };
-      sts.assumeRole(params, (err, data) => {
-        expect(err).toBeNull();
-        expect(data).toMatchObject(response);
-
-        expect(http).toHaveBeenCalledTimes(1);
-        expect(http).toHaveBeenCalledWith(
-          expect.objectContaining({
-            method: 'POST',
-            url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
-            headers: {
-              Authorization: expect.any(String),
-              Host: 'sts.ap-southeast-2.amazonaws.com',
-              'X-Amz-Date': expect.any(String),
+        const params = {
+          RoleArn: 'arn::123',
+          RoleSessionName: 'testUser',
+          Tags: [
+            {
+              Key: 'tag-value',
+              Value: 'tag-value',
             },
-          })
-        );
+          ],
+          TransitiveTagKeys: ['a', 'b'],
+        };
+        sts.assumeRole(params, (err, data) => {
+          expect(err).toBeNull();
+          expect(data).toMatchObject(response);
+
+          expect(http).toHaveBeenCalledTimes(1);
+          expect(http).toHaveBeenCalledWith(
+            expect.objectContaining({
+              method: 'POST',
+              url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
+              headers: {
+                Authorization: expect.any(String),
+                Host: 'sts.ap-southeast-2.amazonaws.com',
+                'X-Amz-Date': expect.any(String),
+              },
+            }),
+            expect.any(Function)
+          );
+          done();
+        });
       });
     });
 
     test('should successfully invoke sts assume role with session token', () => {
-      const optionsWithSessionToken = {
-        accessKeyId: '123',
-        secretAccessKey: '123',
-        sessionToken: '123',
-        region: 'ap-southeast-2',
-      };
-      const stsWithSessionToken = new STS(optionsWithSessionToken);
+      return new Promise((done) => {
+        const optionsWithSessionToken = {
+          accessKeyId: '123',
+          secretAccessKey: '123',
+          sessionToken: '123',
+          region: 'ap-southeast-2',
+        };
+        const stsWithSessionToken = new STS(optionsWithSessionToken);
 
-      const response = {
-        AssumedRoleUser: {
-          Arn: 'arn::123/testUser',
-          AssumedRoleId: 'ABC123:testUser',
-        },
-        Credentials: {
-          AccessKeyId: '123456',
-          Expiration: '2020-02-28T03:25:41Z',
-          SecretAccessKey: '123456',
-          SessionToken: '123456',
-        },
-      };
+        const response = {
+          AssumedRoleUser: {
+            Arn: 'arn::123/testUser',
+            AssumedRoleId: 'ABC123:testUser',
+          },
+          Credentials: {
+            AccessKeyId: '123456',
+            Expiration: '2020-02-28T03:25:41Z',
+            SecretAccessKey: '123456',
+            SessionToken: '123456',
+          },
+        };
 
-      http.mockImplementation(() => ({
-        statusCode: 200,
-        body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+        http.mockImplementation((_, callback) => {
+          return callback(null, {
+            statusCode: 200,
+            body: `<AssumeRoleResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
             <AssumeRoleResult>
                 <AssumedRoleUser>
                     <AssumedRoleId>ABC123:testUser</AssumedRoleId>
@@ -122,50 +130,49 @@ describe('STS Module', () => {
                 <RequestId>203fa10f-ad5f-410d-b5ec-0ea5f0d1ae9a</RequestId>
             </ResponseMetadata>
         </AssumeRoleResponse>`,
-      }));
+          });
+        });
 
-      const params = {
-        RoleArn: 'arn::123',
-        RoleSessionName: 'testUser',
-        Tags: [
-          {
-            Key: 'tag-value',
-            Value: 'tag-value',
-          },
-        ],
-        TransitiveTagKeys: ['a', 'b'],
-      };
-      stsWithSessionToken.assumeRole(params, (err, data) => {
-        expect(err).toBeNull();
-        expect(data).toMatchObject(response);
-
-        expect(http).toHaveBeenCalledTimes(1);
-        expect(http).toHaveBeenCalledWith(
-          expect.objectContaining({
-            method: 'POST',
-            url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
-            headers: {
-              Authorization: expect.any(String),
-              Host: 'sts.ap-southeast-2.amazonaws.com',
-              'X-Amz-Date': expect.any(String),
-              'X-Amz-Security-Token': '123',
+        const params = {
+          RoleArn: 'arn::123',
+          RoleSessionName: 'testUser',
+          Tags: [
+            {
+              Key: 'tag-value',
+              Value: 'tag-value',
             },
-          })
-        );
+          ],
+          TransitiveTagKeys: ['a', 'b'],
+        };
+        stsWithSessionToken.assumeRole(params, (err, data) => {
+          expect(err).toBeNull();
+          expect(data).toMatchObject(response);
+
+          expect(http).toHaveBeenCalledTimes(1);
+          expect(http).toHaveBeenCalledWith(
+            expect.objectContaining({
+              method: 'POST',
+              url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
+              headers: {
+                Authorization: expect.any(String),
+                Host: 'sts.ap-southeast-2.amazonaws.com',
+                'X-Amz-Date': expect.any(String),
+                'X-Amz-Security-Token': '123',
+              },
+            }),
+            expect.any(Function)
+          );
+          done();
+        });
       });
     });
 
     test('should handle error body from sts assume role', () => {
-      const response = {
-        Type: 'Sender',
-        Code: 'SignatureDoesNotMatch',
-        Message:
-          'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.',
-      };
-
-      http.mockImplementation(() => ({
-        statusCode: 200,
-        body: `<ErrorResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
+      return new Promise((done) => {
+        http.mockImplementation((_, callback) => {
+          return callback(null, {
+            statusCode: 400,
+            body: `<ErrorResponse xmlns="https://sts.amazonaws.com/doc/2011-06-15/">
             <Error>
                 <Type>Sender</Type>
                 <Code>SignatureDoesNotMatch</Code>
@@ -173,51 +180,61 @@ describe('STS Module', () => {
             </Error>
             <RequestId>5d1dfd4e-36f9-4d6d-a78e-90b72670c129</RequestId>
         </ErrorResponse>`,
-      }));
+          });
+        });
 
-      const params = {
-        RoleArn: 'arn::123',
-        RoleSessionName: 'testUser',
-        Tags: [
-          {
-            Key: 'tag-value',
-            Value: 'tag-value',
-          },
-        ],
-        TransitiveTagKeys: ['a', 'b'],
-      };
-      sts.assumeRole(params, (err, data) => {
-        expect(data).toBeNull();
-        expect(err).toBeInstanceOf(Error);
-        expect(err).toEqual(new Error(JSON.stringify(response)));
-
-        expect(http).toHaveBeenCalledTimes(1);
-        expect(http).toHaveBeenCalledWith(
-          expect.objectContaining({
-            method: 'POST',
-            url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
-            headers: {
-              Authorization: expect.any(String),
-              Host: 'sts.ap-southeast-2.amazonaws.com',
-              'X-Amz-Date': expect.any(String),
+        const params = {
+          RoleArn: 'arn::123',
+          RoleSessionName: 'testUser',
+          Tags: [
+            {
+              Key: 'tag-value',
+              Value: 'tag-value',
             },
-          })
-        );
+          ],
+          TransitiveTagKeys: ['a', 'b'],
+        };
+        sts.assumeRole(params, (err, data) => {
+          expect(data).toBeNull();
+          expect(err).toBeInstanceOf(Error);
+          expect(err.code).toEqual('SignatureDoesNotMatch');
+          expect(err.message).toEqual(
+            'The request signature we calculated does not match the signature you provided. Check your AWS Secret Access Key and signing method. Consult the service documentation for details.'
+          );
+
+          expect(http).toHaveBeenCalledTimes(1);
+          expect(http).toHaveBeenCalledWith(
+            expect.objectContaining({
+              method: 'POST',
+              url: `https://sts.ap-southeast-2.amazonaws.com?RoleArn=${params.RoleArn}&RoleSessionName=${params.RoleSessionName}&Tags.member.1.Key=${params.Tags[0].Key}&Tags.member.1.Value=${params.Tags[0].Value}&TransitiveTagKeys.member.1=${params.TransitiveTagKeys[0]}&TransitiveTagKeys.member.2=${params.TransitiveTagKeys[1]}&Version=2011-06-15&Action=AssumeRole`,
+              headers: {
+                Authorization: expect.any(String),
+                Host: 'sts.ap-southeast-2.amazonaws.com',
+                'X-Amz-Date': expect.any(String),
+              },
+            }),
+            expect.any(Function)
+          );
+          done();
+        });
       });
     });
 
     test('should return all errors unchanged', () => {
-      http.mockImplementation(() => {
-        throw new Error('this is an error');
-      });
+      return new Promise((done) => {
+        http.mockImplementation((_, callback) => {
+          return callback(new Error('this is an error'), null);
+        });
 
-      const params = {
-        RoleArn: 'arn::123',
-        RoleSessionName: 'testUser',
-      };
-      sts.assumeRole(params, (err, data) => {
-        expect(data).toBeNull();
-        expect(err.message).toEqual('this is an error');
+        const params = {
+          RoleArn: 'arn::123',
+          RoleSessionName: 'testUser',
+        };
+        sts.assumeRole(params, (err, data) => {
+          expect(data).toBeNull();
+          expect(err.message).toEqual('this is an error');
+          done();
+        });
       });
     });
 
